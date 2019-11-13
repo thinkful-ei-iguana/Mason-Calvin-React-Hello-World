@@ -3,7 +3,6 @@ import React from "react";
 class Accordion extends React.Component {
   state = {
     show: 0
-    
   };
   sections = [
     {
@@ -15,12 +14,13 @@ class Accordion extends React.Component {
       content: "content1"
     }
   ];
+
   handleClick(section) {
     this.setState({
-      show: (this.state.show===section) ? "banana" : section
-      
-    })
+      show: this.state.show === section ? "banana" : section
+    });
   }
+
   componentDidMount() {
     console.log("componentDidMount");
   }
@@ -31,23 +31,19 @@ class Accordion extends React.Component {
 
   render() {
     console.log(this.state);
-    
+    const arrayLi = this.sections.map((section, index) => {
+      return (
+        <li key={index}>
+          <button onClick={() => this.handleClick(index)}>
+            {section.title}
+          </button>
+          <p hidden={this.state.show !== index}>{section.content}</p>
+        </li>
+      );
+    });
     return (
       <div>
-        <ul>
-          <li>
-            <button onClick={() => this.handleClick(0)}>
-              {this.sections[0].title}
-            </button>
-            <p hidden={this.state.show !== 0}>{this.sections[0].content}</p>
-          </li>
-          <li>
-            <button onClick={() => this.handleClick(1)}>
-              {this.sections[1].title}
-            </button>
-            <p hidden={this.state.show !== 1}>{this.sections[1].content}</p>
-          </li>
-        </ul>
+        <ul> {arrayLi}</ul>
       </div>
     );
   }
